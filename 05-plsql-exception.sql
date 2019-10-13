@@ -1,0 +1,11 @@
+DECLARE
+    v_name EMP.ENAME%TYPE;
+    v_sal EMP.SAL%TYPE;
+BEGIN
+    SELECT ENAME,SAL INTO v_name, v_sal FROM EMP WHERE EMPNO=&EMPNO;
+
+    DBMS_OUTPUT.PUT_LINE('ENAME: ' || v_name || ', SAL: ' || v_sal);
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Not Found Record');
+END;
