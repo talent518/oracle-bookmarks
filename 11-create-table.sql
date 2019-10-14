@@ -62,7 +62,7 @@ insert into student values(5,'小白',23,'女','看门','1001001',3);
 DROP sequence seq_student_sno;
 CREATE sequence seq_student_sno START WITH 6 increment BY 1 nomaxvalue nominvalue cache 20 ORDER;
 --随机生成学生记录100万，用于有无索引的测试
---/
+@delimiter $$;
 declare
     v_i integer default 0;
     v_r integer;
@@ -113,8 +113,8 @@ begin
         end if;
     end loop;
 end;
-/
---select seq_student_sno.currval from dual;
+$$
+@delimiter ;
 
 -- 删除索引
 --drop index i_stu_sname;
