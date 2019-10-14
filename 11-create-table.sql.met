@@ -1,5 +1,5 @@
 #Extended file properties defined by DbVisualizer
-#Mon Oct 14 13:04:00 CST 2019
+#Mon Oct 14 14:21:10 CST 2019
 chart.type=result-set-chartviewer-line-chart-command
 chart.line_width=2
 chart.serie.0.label=SNAME
@@ -24,15 +24,15 @@ file.comment=
 chart.pie_label_type=Line Labels
 chart.bar_type=Raised
 chart.yaxis_end_value=0.0
-chart.category_column=SNAME
 exec.schema=TEST
+chart.category_column=SNAME
 file.encoding=UTF-8
 chart.bg_top_color=\#ffffff
 chart.line_type=Straight
 chart.xaxis_title_visible=true
 chart.bar_group_gap=4
-chart.yaxis_auto_start_value=true
 chart.title=
+chart.yaxis_auto_start_value=true
 monitor.frame_bounds=
 chart.yaxis_major_grid_visible=true
 chart.yaxis_title=

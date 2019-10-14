@@ -68,10 +68,15 @@ declare
     v_sex student.ssex%type;
     v_fav student.sfav%type;
     v_cno student.cno%type;
+    l_start_time PLS_INTEGER;
+    l_end_time PLS_INTEGER;
 begin
+    commit; -- 首先进行一个可选的commit提交  确保set transaction 为事物中第一条语句
+    set transaction read write name 'random_student'; -- 使用name为事物命名    设置只读状态
+    l_start_time := dbms_utility.get_time();
     loop
         v_i := v_i + 1;
-        exit when v_i > 100;
+        exit when v_i > 1000000;
         v_r := dbms_random.value(1,2);
         if v_r = 1 then
             v_sex := '男';
@@ -86,7 +91,6 @@ begin
             when 4 then '书法'
             else '看门'
         end;
-        v_r := dbms_random.value(100000,999999);
         v_cno := dbms_random.value(1,4);
         insert into student values(
             seq_student_sno.nextval, -- sno
@@ -94,9 +98,18 @@ begin
             dbms_random.value(18,35), -- sage
             v_sex, -- ssex
             v_fav, -- sfav
-            to_char(1001001+seq_student_sno.currval+v_r), -- sqq
+            to_char(4000000+seq_student_sno.currval), -- sqq
             v_cno -- cno
         );
+        -- 每10000条提交一次事务
+        if mod(v_i, 10000) = 0 then
+            commit;
+            l_end_time := dbms_utility.get_time();
+            
+            dbms_output.put_line(v_i || ', run time: ' || (l_end_time-l_start_time)/100 || ' seconds');
+            
+            l_start_time := l_end_time;
+        end if;
     end loop;
 end;
 /
