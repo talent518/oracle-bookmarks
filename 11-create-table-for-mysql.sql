@@ -20,7 +20,7 @@ insert into clazz values(4,'Oracle班','Oracle从入门到精通班');
 create table student (
     sno int(10) unsigned not null auto_increment,
     sname varchar(100) not null,
-    sage smallint(3) not null,
+    sage smallint(3) not null check(sage>0 and sage<150),
     ssex enum('男','女') not null,
     sfav varchar(500),
     sqq varchar(30),
@@ -30,6 +30,7 @@ create table student (
     unique index(sqq),
     foreign key(cno) references clazz(cno)
 ) engine=innodb default charset=utf8;
+-- 上面student表的创建SQL中的check需要MariaDB 10.2+才会支持，其他
 
 -- 向学生表添加数据
 insert into student values(1,'张三',23,'男','唱歌','123456',1);
