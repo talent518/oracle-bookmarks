@@ -61,7 +61,7 @@ insert into student values(5,'小白',23,'女','看门','1001001',3);
 -- 添加自增字段之序列的使用
 DROP sequence seq_student_sno;
 CREATE sequence seq_student_sno START WITH 6 increment BY 1 nomaxvalue nominvalue cache 20 ORDER;
---/
+--/ 随机生成学生记录100万，用于有无索引的测试
 declare
     v_i integer default 0;
     v_r integer;
@@ -76,7 +76,7 @@ begin
     l_start_time := dbms_utility.get_time();
     loop
         v_i := v_i + 1;
-        exit when v_i > 1000000;
+        exit when v_i > 1000000; -- 随机生成的记录数
         v_r := dbms_random.value(1,2);
         if v_r = 1 then
             v_sex := '男';
@@ -115,4 +115,15 @@ end;
 /
 --select seq_student_sno.currval from dual;
 
-select * from student;
+-- 删除索引
+--drop index i_stu_sname;
+-- 创建索引
+--create index i_stu_sname on student(sname asc);
+alter table student drop constraint uk_sname;
+alter table student add constraint uk_sname unique(sname);
+
+select * from student where sname in('seq910100','seq2342','seq323234','seq634343');
+select * from student where sname in('seq323234','seq634343','seq532343','seq2340','seq232');
+select * from student where sname in('seq532343','seq2340','seq232','seq999999');
+select * from student where sname in('seq910100','seq2342','seq2340','seq232','seq999999');
+select * from student where sname in('seq910100','seq2342','seq323234','seq634343','seq532343','seq2340','seq232','seq999999');
