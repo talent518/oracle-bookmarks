@@ -1,3 +1,6 @@
+select @@autocommit into @autocommit;
+set autocommit=0;
+
 drop table if exists student;
 drop table if exists clazz;
 
@@ -54,6 +57,7 @@ create procedure batch_random_insert_student(v_records int)
 begin
     declare v_i integer default 0;
     declare v_fav varchar(10) character set utf8;
+    set autocommit = 0;
     start transaction;
     while  v_i < v_records do
         set v_i = v_i + 1;
@@ -84,6 +88,8 @@ $$
 $$
 
 call batch_random_insert_student(1000000);
+
+set autocommit=@autocommit;
 
 select * from student where sname in('seq910100','seq2342','seq323234','seq634343');
 select * from student where sname in('seq323234','seq634343','seq532343','seq2340','seq232');
