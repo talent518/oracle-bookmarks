@@ -4,7 +4,7 @@ drop table clazz;
 -- 班级表
 create table clazz(
     cno number(10) constraint pk_cno primary key,
-    cname varchar2(100) constraint nn_cname not null,
+    cname varchar2(100) constraint uk_cname unique not null,
     cdesc varchar2(300)
 );
 
@@ -61,7 +61,8 @@ insert into student values(5,'小白',23,'女','看门','1001001',3);
 -- 添加自增字段之序列的使用
 DROP sequence seq_student_sno;
 CREATE sequence seq_student_sno START WITH 6 increment BY 1 nomaxvalue nominvalue cache 20 ORDER;
---/ 随机生成学生记录100万，用于有无索引的测试
+--随机生成学生记录100万，用于有无索引的测试
+--/
 declare
     v_i integer default 0;
     v_r integer;
